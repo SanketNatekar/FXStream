@@ -1,0 +1,18 @@
+const express = require("express");
+const dbConnect = require("./config/database");
+
+const app = express();
+require("dotenv").config();
+
+const PORT = process.env.PORT || 4000;
+
+app.use(express.json());
+
+app.use('/api/auth', require('./controllers/authController'));
+app.use('/api/dashboard', require('./routes/dashboard'));
+
+app.listen(PORT, () => {
+  console.log(`THE SERVER IS UP AND RUNNING AT PORT ${PORT}`);
+});
+
+dbConnect();
