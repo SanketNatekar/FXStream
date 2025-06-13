@@ -11,6 +11,16 @@ app.use(express.json());
 app.use('/api/auth', require('./controllers/authController'));
 app.use('/api/dashboard', require('./routes/dashboard'));
 
+const batchRoutes = require('./routes/batchRoutes');
+app.use('/api/batches', batchRoutes);
+
+// const publicBatchRoutes = require('./routes/publicBatchRoutes');
+app.use('/api/public-batches', require('./routes/publicBatchRoutes'));
+
+// app.use('*', (req, res) => {
+//   res.status(404).json({ message: `Route not found: ${req.originalUrl}` });
+// });
+
 app.listen(PORT, () => {
   console.log(`THE SERVER IS UP AND RUNNING AT PORT ${PORT}`);
 });
