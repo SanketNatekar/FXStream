@@ -4,9 +4,13 @@ const dbConnect = require("./config/database");
 const app = express();
 require("dotenv").config();
 
+const cors = require("cors");
+
 const PORT = process.env.PORT || 4000;
 
+app.use(cors());
 app.use(express.json());
+
 
 app.use('/api/auth', require('./controllers/authController'));
 app.use('/api/dashboard', require('./routes/dashboard'));
@@ -16,6 +20,12 @@ app.use('/api/batches', batchRoutes);
 
 // const publicBatchRoutes = require('./routes/publicBatchRoutes');
 app.use('/api/public-batches', require('./routes/publicBatchRoutes'));
+
+app.use('/api/payment', require('./routes/paymentRoutes'));
+
+const paymentRoutes = require("./routes/paymentRoutes");
+app.use("/api/payment", paymentRoutes);
+
 
 // app.use('*', (req, res) => {
 //   res.status(404).json({ message: `Route not found: ${req.originalUrl}` });
