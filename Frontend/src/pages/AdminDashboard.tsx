@@ -1,13 +1,12 @@
 // AdminDashboard.tsx (integrated registered student view)
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Plus, Edit, Trash2, Search, Eye } from 'lucide-react';
 import axios from 'axios';
+import { Edit, Eye, Plus, Search, Trash2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
-import { useToast } from '../hooks/use-toast';
 import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../hooks/use-toast';
 import { Batch } from '../types/batch';
 
 const AdminDashboard = () => {
@@ -32,7 +31,7 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/batches')
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/batches`)
       .then(res => {
         const formatted = res.data.map((b: any) => ({ ...b, id: b._id }));
         setBatches(formatted);
@@ -55,7 +54,7 @@ const AdminDashboard = () => {
   const handleCreateBatch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:4000/api/batches', {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/batches`, {
         batchName: formData.title,
         description: formData.description,
         duration: formData.duration,
@@ -92,7 +91,7 @@ const AdminDashboard = () => {
         language: 'English' as 'English' | 'Hindi' | 'Marathi',
         thumbnail: formData.image,
       };
-      await axios.put(`http://localhost:4000/api/batches/${editingBatch.id}`, updated);
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/batches/${editingBatch.id}`, updated);
       const updatedBatches = batches.map(b => b.id === editingBatch.id ? { ...b, ...updated } : b);
       setBatches(updatedBatches);
       setIsEditModalOpen(false);
@@ -107,7 +106,7 @@ const AdminDashboard = () => {
 
   const handleDeleteBatch = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:4000/api/batches/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/batches/${id}`);
       setBatches(batches.filter(b => b.id !== id));
       toast({ title: 'Success', description: 'Batch deleted successfully!' });
     } catch (err) {
@@ -119,7 +118,7 @@ const AdminDashboard = () => {
   const handleViewUsers = async (batchId: string) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:4000/api/batches/registered-users/${batchId}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/batches/registered-users/${batchId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Search, TrendingUp } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Users, Clock, Award, Search, TrendingUp } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
 import BatchCard from '../components/BatchCard';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
+import { Card, CardContent } from '../components/ui/card';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../hooks/use-toast';
-import axios from 'axios';
 import { Batch } from '../types/batch';
 
 const UserDashboard = () => {
@@ -20,7 +20,7 @@ const UserDashboard = () => {
 
   // Fetch batches from backend
   useEffect(() => {
-    axios.get('http://localhost:4000/api/public-batches')
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/public-batches`)
       .then((res) => {
         const formatted = res.data.map((b: any) => ({
           ...b,
