@@ -1,23 +1,25 @@
-// AdminDashboard.tsx (updated to use real backend)
+// AdminDashboard.tsx (integrated registered student view)
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Edit, Trash2, Search, TrendingUp } from 'lucide-react';
+import { Plus, Edit, Trash2, Search, Eye } from 'lucide-react';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
-import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../hooks/use-toast';
+import { useAuth } from '../contexts/AuthContext';
 import { Batch } from '../types/batch';
 
 const AdminDashboard = () => {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [batches, setBatches] = useState<Batch[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingBatch, setEditingBatch] = useState<Batch | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showUsersModal, setShowUsersModal] = useState(false);
+  const [currentUsers, setCurrentUsers] = useState<any[]>([]);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -114,6 +116,22 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleViewUsers = async (batchId: string) => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(`http://localhost:4000/api/batches/registered-users/${batchId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setCurrentUsers(res.data);
+      setShowUsersModal(true);
+    } catch (err) {
+      console.error('Error fetching users:', err);
+      toast({ title: 'Error', description: 'Could not fetch users.' });
+    }
+  };
+
   const openEditModal = (batch: Batch) => {
     setEditingBatch(batch);
     setFormData({
@@ -133,82 +151,90 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between mb-4">
-        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+    <div className="p-6 flex flex-col items-center min-h-screen bg-gray-50">
+      <div className="flex justify-between items-center mb-6 w-full max-w-4xl">
+        <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
         <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
           <DialogTrigger asChild>
-            <Button><Plus className="mr-2 h-4 w-4" />Create Batch</Button>
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white"><Plus className="mr-2 h-4 w-4" />Create Batch</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Create New Batch</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleCreateBatch} className="space-y-4">
-              {/* Form Fields */}
-              <input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="Title" required className="w-full px-3 py-2 border" />
-              <input value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Description" required className="w-full px-3 py-2 border" />
-              <input value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} placeholder="Duration" required className="w-full px-3 py-2 border" />
-              <input type="number" value={formData.price} onChange={e => setFormData({ ...formData, price: +e.target.value })} placeholder="Price" required className="w-full px-3 py-2 border" />
-              <input type="date" value={formData.startDate} onChange={e => setFormData({ ...formData, startDate: e.target.value })} required className="w-full px-3 py-2 border" />
-              <input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} placeholder="Image URL" required className="w-full px-3 py-2 border" />
-              <input type="number" value={formData.maxStudents} onChange={e => setFormData({ ...formData, maxStudents: +e.target.value })} placeholder="Total Slots" required className="w-full px-3 py-2 border" />
+              <input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="Title" required className="w-full px-3 py-2 border rounded-md" />
+              <input value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Description" required className="w-full px-3 py-2 border rounded-md" />
+              <input value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} placeholder="Duration" required className="w-full px-3 py-2 border rounded-md" />
+              <input type="number" value={formData.price} onChange={e => setFormData({ ...formData, price: +e.target.value })} placeholder="Price" required className="w-full px-3 py-2 border rounded-md" />
+              <input type="date" value={formData.startDate} onChange={e => setFormData({ ...formData, startDate: e.target.value })} required className="w-full px-3 py-2 border rounded-md" />
+              <input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} placeholder="Image URL" required className="w-full px-3 py-2 border rounded-md" />
+              <input type="number" value={formData.maxStudents} onChange={e => setFormData({ ...formData, maxStudents: +e.target.value })} placeholder="Total Slots" required className="w-full px-3 py-2 border rounded-md" />
               <div className="flex justify-end">
-                <Button type="submit">Create</Button>
+                <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white">Create</Button>
               </div>
             </form>
           </DialogContent>
         </Dialog>
       </div>
 
-      <input
-        className="mb-4 p-2 border w-full"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
-      />
+      <div className="w-full flex justify-center mb-6">
+        <div className="relative w-80">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <input
+            className="pl-10 pr-4 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Search batches..."
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+        </div>
+      </div>
 
-      <div className="grid gap-4">
+      <div className="grid gap-6 w-full max-w-4xl">
         {filteredBatches.map(batch => (
-          <Card key={batch.id}>
-            <CardHeader className="flex justify-between">
+          <Card key={batch.id} className="shadow-md rounded-md">
+            <CardHeader className="flex justify-between bg-gray-100 p-4 rounded-t-md">
               <div>
-                <CardTitle>{batch.batchName}</CardTitle>
-                <p>{batch.description}</p>
+                <CardTitle className="text-lg font-semibold text-blue-700">{batch.batchName}</CardTitle>
+                <p className="text-sm text-gray-600">{batch.description}</p>
               </div>
               <div className="flex space-x-2">
-                <Button size="sm" onClick={() => openEditModal(batch)}><Edit className="h-4 w-4" /></Button>
+                <Button size="sm" variant="outline" onClick={() => handleViewUsers(batch.id)}><Eye className="h-4 w-4" /></Button>
+                <Button size="sm" variant="outline" onClick={() => openEditModal(batch)}><Edit className="h-4 w-4" /></Button>
                 <Button size="sm" onClick={() => handleDeleteBatch(batch.id)} variant="destructive"><Trash2 className="h-4 w-4" /></Button>
               </div>
             </CardHeader>
-            <CardContent>
-              <p>Start: {new Date(batch.startDate).toLocaleDateString()}</p>
-              <p>Duration: {batch.duration}</p>
-              <p>Price: ₹{batch.price}</p>
-              <p>Slots: {batch.filledSlots || 0}/{batch.totalSlots}</p>
+            <CardContent className="bg-white p-4 border-t text-sm text-gray-700 space-y-1">
+              <p><strong>Start:</strong> {new Date(batch.startDate).toLocaleDateString()}</p>
+              <p><strong>Duration:</strong> {batch.duration}</p>
+              <p><strong>Price:</strong> ₹{batch.price}</p>
+              <p><strong>Slots:</strong> {(batch.registeredUsers?.length || 0)}/{batch.totalSlots}</p>
+              <p><strong>Mode:</strong> {batch.mode}</p>
+              <p><strong>Language:</strong> {batch.language}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+      <Dialog open={showUsersModal} onOpenChange={setShowUsersModal}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Batch</DialogTitle>
+            <DialogTitle>Registered Students</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleEditBatch} className="space-y-4">
-            {/* Same fields as create */}
-            <input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="Title" required className="w-full px-3 py-2 border" />
-            <input value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Description" required className="w-full px-3 py-2 border" />
-            <input value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} placeholder="Duration" required className="w-full px-3 py-2 border" />
-            <input type="number" value={formData.price} onChange={e => setFormData({ ...formData, price: +e.target.value })} placeholder="Price" required className="w-full px-3 py-2 border" />
-            <input type="date" value={formData.startDate} onChange={e => setFormData({ ...formData, startDate: e.target.value })} required className="w-full px-3 py-2 border" />
-            <input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} placeholder="Image URL" required className="w-full px-3 py-2 border" />
-            <input type="number" value={formData.maxStudents} onChange={e => setFormData({ ...formData, maxStudents: +e.target.value })} placeholder="Total Slots" required className="w-full px-3 py-2 border" />
-            <div className="flex justify-end">
-              <Button type="submit">Update</Button>
-            </div>
-          </form>
+          <div className="space-y-2 max-h-96 overflow-y-auto">
+            {currentUsers.length === 0 ? (
+              <p>No students registered yet.</p>
+            ) : (
+              currentUsers.map((user, index) => (
+                <div key={index} className="border p-2 rounded shadow-sm">
+                  <p><strong>Name:</strong> {user.fullName}</p>
+                  <p><strong>Email:</strong> {user.email}</p>
+                  <p><strong>Phone:</strong> {user.phone}</p>
+                  <p><strong>Role:</strong> {user.role}</p>
+                </div>
+              ))
+            )}
+          </div>
         </DialogContent>
       </Dialog>
     </div>

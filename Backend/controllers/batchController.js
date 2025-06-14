@@ -58,3 +58,18 @@ exports.deleteBatch = async (req, res) => {
     res.status(500).json({ message: 'Error deleting batch', error });
   }
 };
+
+exports.getRegisteredUsers = async (req, res) => {
+  if (!req.user || req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied. Admins only.' });
+  }
+
+  try {
+    const batch = await Batch.findById(req.params.id).populate('registeredUsers', '-password');
+    if (!batch) return res.status(404).json({ message: 'Batch not found' });
+
+    res.json(batch.registeredUsers);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};

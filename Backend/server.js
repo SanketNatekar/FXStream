@@ -23,9 +23,12 @@ app.use('/api/public-batches', require('./routes/publicBatchRoutes'));
 
 app.use('/api/payment', require('./routes/paymentRoutes'));
 
-const paymentRoutes = require("./routes/paymentRoutes");
-app.use("/api/payment", paymentRoutes);
+// const paymentRoutes = require("./routes/paymentRoutes");
+// app.use("/api/payment", paymentRoutes);
 
+//fetch all the users
+// const userRoutes = require('./routes/userRoutes');
+// app.use('/api/users', userRoutes);
 
 // app.use('*', (req, res) => {
 //   res.status(404).json({ message: `Route not found: ${req.originalUrl}` });
