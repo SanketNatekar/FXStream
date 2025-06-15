@@ -230,6 +230,9 @@ const LandingPage = () => {
         </div>
       </section>
 
+          {/* About Section */}
+          
+
 
       {/* Features Section */}
       <section id="features" className="py-20 bg-white">
@@ -386,47 +389,81 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* About Section
-      <section id="about" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <img
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop"
-                alt="About FxStreampro"
-                className="rounded-2xl shadow-xl"
-              />
-            </div>
-            <div className="order-1 lg:order-2">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                About FxStreampro
-              </h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Founded by a team of professional traders and educators, FxStreampro has been at the forefront of trading education for over a decade. We believe that anyone can learn to trade successfully with the right guidance and tools.
-              </p>
-              <div className="space-y-4 mb-8">
-                {[
-                  'Over 5,000 successful graduates',
-                  'Industry-leading curriculum',
-                  'Real-time market analysis',
-                  'Lifetime community access'
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="h-5 w-5 text-primary-600" />
-                    <span className="text-gray-700">{item}</span>
-                  </div>
-                ))}
-              </div>
-              <Link to="/signup">
-                <Button size="lg">Join Our Community</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section> */}
+      {/* Broker and socail media link */}
+
+{/* // Broker & Social Media Section */}
+<section className="relative py-20 bg-gradient-to-br from-indigo-50 to-white border-t border-gray-200">
+  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+  <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
+      Our Trusted Broker Partners
+    </h2>
+    <p className="text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
+      We collaborate with globally recognized brokers to ensure seamless trading experiences for our community.
+    </p>
+
+    <div className="flex flex-wrap justify-center gap-10 items-center mb-16">
+      {[{
+        name: 'exeness',
+        url: 'https://one.exnesstrack.org/a/hml0dmvhfy',
+        logo: '../public/exeness1.png'
+      }, {
+        name: 'Pu Prime',
+        url: 'https://www.puprime.partners/forex-trading-account/?affid=60771',
+        logo: '../public/pu_prime.png'
+      }].map((broker, index) => (
+        <a
+          key={index}
+          href={broker.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-1 border border-gray-200 w-48 flex items-center justify-center"
+        >
+          <img src={broker.logo} alt={broker.name} className="h-12 object-contain" />
+        </a>
+      ))}
+    </div>
+
+    <h3 className="text-2xl font-bold text-gray-800 mb-4">Join Our Trading Community</h3>
+    <p className="text-gray-600 text-md mb-8">Stay connected and never miss a market move.</p>
+
+    <div className="flex flex-wrap justify-center gap-6">
+      <a
+        href="https://t.ly/5hYVf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full shadow-md"
+      >
+        <FaWhatsapp className="h-5 w-5" /> <span>WhatsApp</span>
+      </a>
+      <a
+        href="https://t.me/+w2_xVAHPQ005MmQ1"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full shadow-md"
+      >
+        <FaTelegramPlane className="h-5 w-5" /> <span>Telegram</span>
+      </a>
+      <a
+        href="https://instagram.com/fxstreampro"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center space-x-2 bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-full shadow-md"
+      >
+        <Instagram className="h-5 w-5" /> <span>Instagram</span>
+      </a>
+    </div>
+  </div>
+    <div className="mt-20 border-b border-gray-300 shadow-sm pt-8 ">
+      </div>
+</section>
+
+
+
 
       {/* Testimonials Section */}
       <section className="py-20 bg-white">
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

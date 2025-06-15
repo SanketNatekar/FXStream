@@ -85,10 +85,17 @@ const Footer = () => {
               © 2024 FxStreampro. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Cookie Policy</a>
-            </div>
+                <Link to="/terms-and-privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link to="/terms-and-privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
+                  Terms of Service
+                </Link>
+                <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
+                  Cookie Policy
+                </a>
+              </div>
+
           </div>
         </div>
       </div>

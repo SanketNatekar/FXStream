@@ -13,6 +13,10 @@ import Signup from "./pages/Signup";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import TermsAndPrivacyPage from './pages/TermsAndPrivacy';
+
+// Inside your <Routes>
+
 
 const queryClient = new QueryClient();
 
@@ -70,6 +74,12 @@ const AppRoutes = () => {
             <Login />
           </Layout>
         )
+      } />
+      {/* terms and condition  */}
+      <Route path="/terms-and-privacy" element={
+        <Layout showNavbar={true} showFooter={true}>
+          <TermsAndPrivacyPage />
+        </Layout>
       } />
       
       <Route path="/signup" element={
