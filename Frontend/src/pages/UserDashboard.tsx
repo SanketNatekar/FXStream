@@ -9,6 +9,7 @@ import { Card, CardContent } from '../components/ui/card';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../hooks/use-toast';
 import { Batch } from '../types/batch';
+import EnrollButton from '../components/EnrollButton';
 
 const UserDashboard = () => {
   const { user } = useAuth();
@@ -45,13 +46,6 @@ const UserDashboard = () => {
     return matchesSearch && matchesLevel && matchesStatus;
   });
 
-  const handleEnroll = (batchId: string) => {
-    toast({
-      title: 'Enrollment Successful!',
-      description: 'You have been enrolled in the batch. Check your enrolled courses.',
-    });
-  };
-
   const handleViewDetails = (batchId: string) => {
     console.log('View details for batch:', batchId);
   };
@@ -78,7 +72,6 @@ const UserDashboard = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
 
         {enrolledBatches.length > 0 && (
           <div className="mb-8">
@@ -146,13 +139,19 @@ const UserDashboard = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredBatches.map((batch) => (
-              <BatchCard
-                key={batch.id}
-                batch={batch}
-                onEnroll={handleEnroll}
-                onViewDetails={handleViewDetails}
-                showEnrollButton={!enrolledBatchIds.includes(batch.id)}
-              />
+              <Card key={batch.id} className="overflow-hidden">
+                <img src={batch.thumbnail} alt={batch.batchName} className="w-full h-40 object-cover" />
+                <CardContent className="p-4 space-y-3">
+                  <h3 className="text-lg font-semibold text-gray-900">{batch.batchName}</h3>
+                  <p className="text-sm text-gray-600">{batch.description}</p>
+                  <p className="text-sm text-gray-500">Start Date: {new Date(batch.startDate).toLocaleDateString()}</p>
+                  <EnrollButton
+                    amount={batch.price}
+                    batchId={batch.id}
+                    batchName={batch.batchName}
+                  />
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>

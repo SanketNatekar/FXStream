@@ -73,3 +73,33 @@ exports.getRegisteredUsers = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
+
+// @desc    Enroll user in a batch
+// @route   POST /api/batches/:id/enroll
+// @access  Private (user)
+exports.enrollInBatch = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const batchId = req.params.id;
+
+    const batch = await Batch.findById(batchId);
+    if (!batch) return res.status(404).json({ message: 'Batch not found' });
+
+    if (batch.registeredUsers.includes(userId)) {
+      return res.status(400).json({ message: 'User already enrolled' });
+    }
+
+    if (batch.filledSlots >= batch.totalSlots) {
+      return res.status(400).json({ message: 'Batch is already full' });
+    }
+
+    batch.registeredUsers.push(userId);
+    batch.filledSlots += 1;
+
+    await batch.save();
+    res.status(200).json({ message: 'Enrolled successfully', batch });
+  } catch (err) {
+    console.error('Enrollment error:', err);
+    res.status(500).json({ message: 'Enrollment failed', error: err.message });
+  }
+};
