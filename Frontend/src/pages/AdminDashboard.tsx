@@ -1,4 +1,4 @@
-// AdminDashboard.tsx (integrated registered student view)
+// AdminDashboard.tsx
 import axios from 'axios';
 import { Edit, Eye, Plus, Search, Trash2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
@@ -9,16 +9,24 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../hooks/use-toast';
 import { Batch } from '../types/batch';
 
+type User = {
+  fullName: string;
+  email: string;
+  phone: string;
+  role: string;
+};
+
 const AdminDashboard = () => {
   const { toast } = useToast();
   const { user } = useAuth();
+
   const [batches, setBatches] = useState<Batch[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingBatch, setEditingBatch] = useState<Batch | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showUsersModal, setShowUsersModal] = useState(false);
-  const [currentUsers, setCurrentUsers] = useState<any[]>([]);
+  const [currentUsers, setCurrentUsers] = useState<User[]>([]);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -31,12 +39,18 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/batches`)
-      .then(res => {
+    const fetchBatches = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/batches`);
         const formatted = res.data.map((b: any) => ({ ...b, id: b._id }));
         setBatches(formatted);
-      })
-      .catch(err => console.error('Error fetching batches:', err));
+      } catch (err) {
+        console.error('Error fetching batches:', err);
+        toast({ title: 'Error', description: 'Could not load batches.' });
+      }
+    };
+
+    fetchBatches();
   }, []);
 
   const resetForm = () => {
@@ -65,8 +79,7 @@ const AdminDashboard = () => {
         language: 'English',
         thumbnail: formData.image,
       });
-      const newBatch = { ...res.data, id: res.data._id };
-      setBatches([...batches, newBatch]);
+      setBatches([...batches, { ...res.data, id: res.data._id }]);
       setIsCreateModalOpen(false);
       resetForm();
       toast({ title: 'Success', description: 'Batch created successfully!' });
@@ -87,13 +100,15 @@ const AdminDashboard = () => {
         price: formData.price,
         startDate: formData.startDate,
         totalSlots: formData.maxStudents,
-        mode: 'online' as "online" | "offline",
-        language: 'English' as 'English' | 'Hindi' | 'Marathi',
+        mode: 'online' as const,
+        language: 'English' as const,
         thumbnail: formData.image,
       };
+
       await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/batches/${editingBatch.id}`, updated);
-      const updatedBatches = batches.map(b => b.id === editingBatch.id ? { ...b, ...updated } : b);
-      setBatches(updatedBatches);
+      setBatches(prev =>
+        prev.map(b => (b.id === editingBatch.id ? { ...b, ...updated } : b))
+      );
       setIsEditModalOpen(false);
       setEditingBatch(null);
       resetForm();
@@ -107,8 +122,8 @@ const AdminDashboard = () => {
   const handleDeleteBatch = async (id: string) => {
     try {
       await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/batches/${id}`);
-      setBatches(batches.filter(b => b.id !== id));
-      toast({ title: 'Success', description: 'Batch deleted successfully!' });
+      setBatches(prev => prev.filter(b => b.id !== id));
+      toast({ title: 'Deleted', description: 'Batch deleted successfully!' });
     } catch (err) {
       console.error('Error deleting batch:', err);
       toast({ title: 'Error', description: 'Failed to delete batch.' });
@@ -116,18 +131,22 @@ const AdminDashboard = () => {
   };
 
   const handleViewUsers = async (batchId: string) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast({ title: 'Unauthorized', description: 'Login required.' });
+      return;
+    }
+
     try {
-      const token = localStorage.getItem('token');
-      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/batches/registered-users/${batchId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/batches/registered-users/${batchId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setCurrentUsers(res.data);
       setShowUsersModal(true);
     } catch (err) {
       console.error('Error fetching users:', err);
-      toast({ title: 'Error', description: 'Could not fetch users.' });
+      toast({ title: 'Error', description: 'Could not fetch registered users.' });
     }
   };
 
@@ -151,32 +170,72 @@ const AdminDashboard = () => {
 
   return (
     <div className="p-6 flex flex-col items-center min-h-screen bg-gray-50">
+      {/* Header */}
       <div className="flex justify-between items-center mb-6 w-full max-w-4xl">
         <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
         <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white"><Plus className="mr-2 h-4 w-4" />Create Batch</Button>
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Plus className="mr-2 h-4 w-4" />Create Batch
+            </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Create New Batch</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleCreateBatch} className="space-y-4">
-              <input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="Title" required className="w-full px-3 py-2 border rounded-md" />
-              <input value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Description" required className="w-full px-3 py-2 border rounded-md" />
-              <input value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} placeholder="Duration" required className="w-full px-3 py-2 border rounded-md" />
-              <input type="number" value={formData.price} onChange={e => setFormData({ ...formData, price: +e.target.value })} placeholder="Price" required className="w-full px-3 py-2 border rounded-md" />
-              <input type="date" value={formData.startDate} onChange={e => setFormData({ ...formData, startDate: e.target.value })} required className="w-full px-3 py-2 border rounded-md" />
-              <input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} placeholder="Image URL" required className="w-full px-3 py-2 border rounded-md" />
-              <input type="number" value={formData.maxStudents} onChange={e => setFormData({ ...formData, maxStudents: +e.target.value })} placeholder="Total Slots" required className="w-full px-3 py-2 border rounded-md" />
+              {['title', 'description', 'duration', 'image'].map(field => (
+                <input
+                  key={field}
+                  value={(formData as any)[field]}
+                  onChange={e =>
+                    setFormData({ ...formData, [field]: e.target.value })
+                  }
+                  placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                  required
+                  className="w-full px-3 py-2 border rounded-md"
+                />
+              ))}
+              <input
+                type="number"
+                value={formData.price}
+                onChange={e =>
+                  setFormData({ ...formData, price: +e.target.value })
+                }
+                placeholder="Price"
+                required
+                className="w-full px-3 py-2 border rounded-md"
+              />
+              <input
+                type="date"
+                value={formData.startDate}
+                onChange={e =>
+                  setFormData({ ...formData, startDate: e.target.value })
+                }
+                required
+                className="w-full px-3 py-2 border rounded-md"
+              />
+              <input
+                type="number"
+                value={formData.maxStudents}
+                onChange={e =>
+                  setFormData({ ...formData, maxStudents: +e.target.value })
+                }
+                placeholder="Total Slots"
+                required
+                className="w-full px-3 py-2 border rounded-md"
+              />
               <div className="flex justify-end">
-                <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white">Create</Button>
+                <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white">
+                  Create
+                </Button>
               </div>
             </form>
           </DialogContent>
         </Dialog>
       </div>
 
+      {/* Search */}
       <div className="w-full flex justify-center mb-6">
         <div className="relative w-80">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -189,6 +248,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
+      {/* Batches List */}
       <div className="grid gap-6 w-full max-w-4xl">
         {filteredBatches.map(batch => (
           <Card key={batch.id} className="shadow-md rounded-md">
@@ -200,7 +260,7 @@ const AdminDashboard = () => {
               <div className="flex space-x-2">
                 <Button size="sm" variant="outline" onClick={() => handleViewUsers(batch.id)}><Eye className="h-4 w-4" /></Button>
                 <Button size="sm" variant="outline" onClick={() => openEditModal(batch)}><Edit className="h-4 w-4" /></Button>
-                <Button size="sm" onClick={() => handleDeleteBatch(batch.id)} variant="destructive"><Trash2 className="h-4 w-4" /></Button>
+                <Button size="sm" variant="destructive" onClick={() => handleDeleteBatch(batch.id)}><Trash2 className="h-4 w-4" /></Button>
               </div>
             </CardHeader>
             <CardContent className="bg-white p-4 border-t text-sm text-gray-700 space-y-1">
@@ -215,6 +275,7 @@ const AdminDashboard = () => {
         ))}
       </div>
 
+      {/* Registered Users Modal */}
       <Dialog open={showUsersModal} onOpenChange={setShowUsersModal}>
         <DialogContent>
           <DialogHeader>
@@ -234,6 +295,63 @@ const AdminDashboard = () => {
               ))
             )}
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Batch Modal */}
+      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Batch</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleEditBatch} className="space-y-4">
+            {['title', 'description', 'duration', 'image'].map(field => (
+              <input
+                key={field}
+                value={(formData as any)[field]}
+                onChange={e =>
+                  setFormData({ ...formData, [field]: e.target.value })
+                }
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                required
+                className="w-full px-3 py-2 border rounded-md"
+              />
+            ))}
+            <input
+              type="number"
+              value={formData.price}
+              onChange={e =>
+                setFormData({ ...formData, price: +e.target.value })
+              }
+              placeholder="Price"
+              required
+              className="w-full px-3 py-2 border rounded-md"
+            />
+            <input
+              type="date"
+              value={formData.startDate}
+              onChange={e =>
+                setFormData({ ...formData, startDate: e.target.value })
+              }
+              required
+              className="w-full px-3 py-2 border rounded-md"
+            />
+            <input
+              type="number"
+              value={formData.maxStudents}
+              onChange={e =>
+                setFormData({ ...formData, maxStudents: +e.target.value })
+              }
+              placeholder="Total Slots"
+              required
+              className="w-full px-3 py-2 border rounded-md"
+            />
+            <div className="flex justify-end">
+              <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+                Save Changes
+              </Button>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
     </div>

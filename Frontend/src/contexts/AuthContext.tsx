@@ -10,7 +10,7 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<{ user: User; token: string } | null>;
   logout: () => void;
   signup: (name: string, email: string, password: string, phone?: string) => Promise<boolean>;
   isLoading: boolean;
@@ -44,24 +44,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false);
   }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (
+    email: string,
+    password: string
+  ): Promise<{ user: User; token: string } | null> => {
     setIsLoading(true);
     try {
       const res = await axios.post(`${BASE_URL}/auth/login`, { email, password });
       const { token, user } = res.data;
-
+  
       setUser(user);
       localStorage.setItem('fxstreampro_user', JSON.stringify(user));
       localStorage.setItem('fxstreampro_token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      return true;
+  
+      return { user, token }; // ✅ return both user and token
     } catch (err) {
       console.error('Login failed:', err);
-      return false;
+      return null;
     } finally {
       setIsLoading(false);
     }
   };
+  
+  
 
   const signup = async (name: string, email: string, password: string, phone: string): Promise<boolean> => {
     setIsLoading(true);

@@ -56,7 +56,7 @@ const Signup = () => {
     }
 
     const success = await signup(formData.name, formData.email, formData.password);
-
+    
     if (success) {
       toast({ title: "Success", description: "Account created successfully! Welcome to FxStreampro." });
       navigate('/dashboard');

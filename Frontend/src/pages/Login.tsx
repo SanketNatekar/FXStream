@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useToast } from '../hooks/use-toast';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+  
     if (!email || !password) {
       toast({
         title: "Error",
@@ -27,15 +28,23 @@ const Login = () => {
       });
       return;
     }
-
-    const success = await login(email, password);
-    
-    if (success) {
+  
+    const res = await login(email, password);
+  
+    if (res) {
+      const { token, user } = res;
+      console.log(token, "   ",user)
+      // ✅ These are already set in AuthContext, but redundant here if needed globally
+      localStorage.setItem('role', user.role);
+      localStorage.setItem('token', token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  
       toast({
         title: "Success",
-        description: "Login successful! Welcome back.",
+        description: `Login successful! Welcome back, ${user.fullName}.`,
       });
-      navigate(role === 'admin' ? '/admin' : '/dashboard');
+  
+      navigate(user.role === 'admin' ? '/admin' : '/dashboard');
     } else {
       toast({
         title: "Error",
@@ -44,6 +53,7 @@ const Login = () => {
       });
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
@@ -63,9 +73,9 @@ const Login = () => {
             <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
             <p className="text-gray-600 text-center">Sign in to your account to continue</p>
           </CardHeader>
-          
+
           <CardContent>
-            {/* Role Selection */}
+            {/* Role Selection (optional UI only) */}
             <div className="grid grid-cols-2 gap-4 mb-6">
               <button
                 type="button"
