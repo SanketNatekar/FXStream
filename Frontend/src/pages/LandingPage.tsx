@@ -91,58 +91,68 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
-                Master the
-                <span className="text-primary-600 block">Financial Markets</span>
-              </h1>
-              <p className="text-xl text-gray-600 mt-6 leading-relaxed">
-                Join thousands of successful traders who've transformed their financial future with our comprehensive trading education platform.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <Link to="/signup">
-                  <Button size="lg" className="w-full sm:w-auto group">
-                    Start Learning Today
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link to="#features">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                    Explore Features
-                  </Button>
-                </Link>
-              </div>
-              <div className="flex items-center space-x-6 mt-8">
-                <div className="flex items-center space-x-2">
-                  <div className="flex -space-x-2">
-                    {[1,2,3,4].map(i => (
-                      <div key={i} className="w-8 h-8 bg-primary-100 rounded-full border-2 border-white"></div>
-                    ))}
-                  </div>
-                  <span className="text-sm text-gray-600">5,000+ Students</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  {[1,2,3,4,5].map(i => (
-                    <Star key={i} className="w-4 h-4 fill-primary-500 text-primary-500" />
-                  ))}
-                  <span className="text-sm text-gray-600 ml-1">4.9/5 Rating</span>
-                </div>
-              </div>
+      <section
+  className="relative bg-cover bg-center bg-no-repeat py-20 overflow-hidden"
+  style={{
+    backgroundImage: 'url("/hero_img.png")', // Replace with actual image path
+  }}
+>
+  {/* Optional overlay for readability */}
+  <div className="absolute inset-0 bg-white/50 backdrop-blur-sm"></div>
+
+  <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="animate-fade-in z-10 relative">
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+          Master the
+          <span className="text-primary-600 block">Financial Markets</span>
+        </h1>
+        <p className="text-xl text-gray-600 mt-6 leading-relaxed">
+          Join thousands of successful traders who've transformed their financial future with our comprehensive trading education platform.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 mt-8">
+          <Link to="/signup">
+            <Button size="lg" className="w-full sm:w-auto group">
+              Start Learning Today
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+          <Link to="#features">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto">
+              Explore Features
+            </Button>
+          </Link>
+        </div>
+        <div className="flex items-center space-x-6 mt-8">
+          <div className="flex items-center space-x-2">
+            <div className="flex -space-x-2">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="w-8 h-8 bg-primary-100 rounded-full border-2 border-white"></div>
+              ))}
             </div>
-            <div className="animate-float lg:block hidden">
-              <img
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
-                alt="Trading Dashboard"
-                className="rounded-2xl shadow-2xl"
-              />
-            </div>
+            <span className="text-sm text-gray-600">5,000+ Students</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Star key={i} className="w-4 h-4 fill-primary-500 text-primary-500" />
+            ))}
+            <span className="text-sm text-gray-600 ml-1">4.9/5 Rating</span>
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* Optional: still include floating image if needed */}
+      {/* <div className="animate-float lg:block hidden relative z-10">
+        <img
+          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
+          alt="Trading Dashboard"
+          className="rounded-2xl shadow-2xl"
+        />
+      </div> */}
+    </div>
+  </div>
+</section>
+
 
       {/* Batches Section */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
@@ -406,11 +416,11 @@ const LandingPage = () => {
       {[{
         name: 'exeness',
         url: 'https://one.exnesstrack.org/a/hml0dmvhfy',
-        logo: '../public/exeness1.png'
+        logo: '/exeness1.png'
       }, {
         name: 'Pu Prime',
         url: 'https://www.puprime.partners/forex-trading-account/?affid=60771',
-        logo: '../public/pu_prime.png'
+        logo: '/pu_prime.png'
       }].map((broker, index) => (
         <a
           key={index}

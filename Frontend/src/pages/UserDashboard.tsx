@@ -18,7 +18,6 @@ const UserDashboard = () => {
   const [selectedLevel, setSelectedLevel] = useState<string>('all');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [batches, setBatches] = useState<Batch[]>([]);
-
   // Fetch batches from backend
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/public-batches`)
@@ -49,7 +48,6 @@ const UserDashboard = () => {
   const handleViewDetails = (batchId: string) => {
     console.log('View details for batch:', batchId);
   };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white border-b border-gray-200">
