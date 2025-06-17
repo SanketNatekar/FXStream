@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './dialog'; // adjust path
+import React from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './dialog'; // adjust as needed
 import { TermsAndConditions, PrivacyPolicy } from '../Legal';
-import { Button } from './button'; // adjust path
+import { Button } from './button'; // adjust as needed
 
-export const LegalConsent = ({ agreed, onChange }) => {
-  const [agreeds, setAgreed] = useState(agreed);
+interface LegalConsentProps {
+  agreed: boolean;
+  onChange: (value: boolean) => void;
+}
 
+export const LegalConsent: React.FC<LegalConsentProps> = ({ agreed, onChange }) => {
   return (
     <div className="mt-6 space-y-4">
       <div className="flex items-start gap-3">
@@ -13,8 +16,8 @@ export const LegalConsent = ({ agreed, onChange }) => {
           type="checkbox"
           id="consent"
           required
-          checked={agreeds}
-          onChange={() => setAgreed(!agreeds)}
+          checked={agreed}
+          onChange={(e) => onChange(e.target.checked)}
           className="mt-1"
         />
         <label htmlFor="consent" className="text-sm text-gray-700">
@@ -45,9 +48,9 @@ export const LegalConsent = ({ agreed, onChange }) => {
         </label>
       </div>
 
-      <Button type="submit" disabled={!agreeds} className="w-full">
+      {/* <Button type="submit" disabled={!agreed} className="w-full">
         Sign Up
-      </Button>
+      </Button> */}
     </div>
   );
 };

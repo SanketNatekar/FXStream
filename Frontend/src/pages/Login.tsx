@@ -19,41 +19,39 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (!email || !password) {
       toast({
-        title: "Error",
-        description: "Please fill in all fields",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Please fill in all fields',
+        variant: 'destructive',
       });
       return;
     }
-  
+
     const res = await login(email, password);
-  
+
     if (res) {
       const { token, user } = res;
-      console.log(token, "   ",user)
-      // ✅ These are already set in AuthContext, but redundant here if needed globally
+
       localStorage.setItem('role', user.role);
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  
+
       toast({
-        title: "Success",
+        title: 'Success',
         description: `Login successful! Welcome back, ${user.fullName}.`,
       });
-  
+
       navigate(user.role === 'admin' ? '/admin' : '/dashboard');
     } else {
       toast({
-        title: "Error",
-        description: "Invalid credentials. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Invalid credentials. Please try again.',
+        variant: 'destructive',
       });
     }
   };
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
@@ -75,7 +73,7 @@ const Login = () => {
           </CardHeader>
 
           <CardContent>
-            {/* Role Selection (optional UI only) */}
+            {/* Role Selection */}
             <div className="grid grid-cols-2 gap-4 mb-6">
               <button
                 type="button"
@@ -148,9 +146,14 @@ const Login = () => {
                   <input type="checkbox" className="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
                   <span className="text-sm text-gray-600">Remember me</span>
                 </label>
-                <a href="#" className="text-sm text-primary-600 hover:text-primary-700">
+
+                {/* ✅ Updated Forgot Password Link */}
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+                >
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
@@ -180,8 +183,12 @@ const Login = () => {
         <div className="mt-6 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
           <h3 className="font-medium text-gray-900 mb-2">Demo Credentials:</h3>
           <div className="text-sm text-gray-600 space-y-1">
-            <div><strong>Student:</strong> student@demo.com / password</div>
-            <div><strong>Admin:</strong> admin@demo.com / password</div>
+            <div>
+              <strong>Student:</strong> student@demo.com / password
+            </div>
+            <div>
+              <strong>Admin:</strong> admin@demo.com / password
+            </div>
           </div>
         </div>
       </div>

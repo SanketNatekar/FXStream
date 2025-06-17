@@ -7,14 +7,14 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  
+
   email: {
     type: String,
     required: true,
     unique: true,
     lowercase: true
   },
-  
+
   password: {
     type: String,
     required: true,
@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema({
 
   phone: {
     type: String,
-    required: false,
     trim: true
   },
 
@@ -33,13 +32,17 @@ const userSchema = new mongoose.Schema({
     default: 'user'
   },
 
+  // ✅ OTP used for Login / Signup (NOT for forgot password → separate model used for that)
+  otp: String,
+  otpExpiry: Date,
+
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
 
-// 🔒 Hash password before saving
+// 🔒 Automatically hash password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   try {
@@ -51,7 +54,7 @@ userSchema.pre('save', async function (next) {
   }
 });
 
-// ✅ Method to compare password during login
+// ✅ Method to compare entered password with hashed password → used for login
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

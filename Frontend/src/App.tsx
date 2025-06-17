@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,9 +13,7 @@ import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import TermsAndPrivacyPage from './pages/TermsAndPrivacy';
-
-// Inside your <Routes>
-
+import ForgotPassword from "./pages/ForgotPassword"; // ✅ Import added
 
 const queryClient = new QueryClient();
 
@@ -44,10 +41,10 @@ const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode;
 };
 
 // Layout Component
-const Layout = ({ children, showNavbar = true, showFooter = true }: { 
-  children: React.ReactNode; 
-  showNavbar?: boolean; 
-  showFooter?: boolean; 
+const Layout = ({ children, showNavbar = true, showFooter = true }: {
+  children: React.ReactNode;
+  showNavbar?: boolean;
+  showFooter?: boolean;
 }) => (
   <div className="min-h-screen flex flex-col">
     {showNavbar && <Navbar />}
@@ -67,7 +64,7 @@ const AppRoutes = () => {
           <LandingPage />
         </Layout>
       } />
-      
+
       <Route path="/login" element={
         user ? <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} replace /> : (
           <Layout showNavbar={false} showFooter={false}>
@@ -75,19 +72,27 @@ const AppRoutes = () => {
           </Layout>
         )
       } />
-      {/* terms and condition  */}
-      <Route path="/terms-and-privacy" element={
-        <Layout showNavbar={true} showFooter={true}>
-          <TermsAndPrivacyPage />
-        </Layout>
-      } />
-      
+
       <Route path="/signup" element={
         user ? <Navigate to="/dashboard" replace /> : (
           <Layout showNavbar={false} showFooter={false}>
             <Signup />
           </Layout>
         )
+      } />
+
+      {/* ✅ Forgot Password Route */}
+      <Route path="/forgot-password" element={
+        <Layout showNavbar={false} showFooter={false}>
+          <ForgotPassword />
+        </Layout>
+      } />
+
+      {/* Terms and Conditions */}
+      <Route path="/terms-and-privacy" element={
+        <Layout>
+          <TermsAndPrivacyPage />
+        </Layout>
       } />
 
       {/* Protected Routes */}

@@ -59,11 +59,23 @@ const EnrollButton: React.FC<EnrollButtonProps> = ({ amount, batchId, batchName 
         });
         const verifyData = await verifyRes.json();
 
+       const token = localStorage.getItem('token');
+       const userStr = localStorage.getItem('fxstreampro_user');
+       const userObj = userStr ? JSON.parse(userStr) : null;
+const userId = userObj?.id || userObj?._id;
+       console.log("User ID:", userId);
+console.log("Token:", token);
+
+       if (!token) {
+      alert({ title: 'Unauthorized', description: 'Login required.' });
+      return;
+    }
+
         if (verifyData.success) {
           // Enroll user in batch
-          await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/batches/enroll/${batchId}`, {
+          await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/batches/enroll/${userId}/${batchId}`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" , Authorization: `Bearer ${token}` },
             body: JSON.stringify({ userId: user._id }),
           });
 
