@@ -4,6 +4,9 @@ import { ArrowRight, Star, Users, Award, TrendingUp, Shield, Clock, Target, Chec
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { FaTelegramPlane , FaWhatsapp } from "react-icons/fa";
+import CountUp from 'react-countup';
+import StatsSection from '@/components/StatsSection';
+
 
 const LandingPage = () => {
   const batches = [
@@ -91,67 +94,101 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
+  
+  
       <section
-  className="relative bg-cover bg-center bg-no-repeat py-20 overflow-hidden"
-  style={{
-    backgroundImage: 'url("/hero_img.png")', // Replace with actual image path
-  }}
->
-  {/* Optional overlay for readability */}
-  <div className="absolute inset-0 bg-white/50 backdrop-blur-sm"></div>
+      className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center"
+      style={{
+        backgroundImage: 'url("/Hero.png")',
+      }}
+    >
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/50 z-0"></div>
 
-  <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div className="animate-fade-in z-10 relative">
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+      {/* Glassmorphism Content Box */}
+      <div className="relative z-10 mx-4 sm:ml-10 p-6 sm:p-10 max-w-full sm:max-w-xl rounded-2xl backdrop-blur-sm bg-white/20 border border-white/30 shadow-lg animate-fade-in">
+        
+        {/* Heading */}
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white leading-tight animate-slide-in">
           Master the
           <span className="text-primary-600 block">Financial Markets</span>
         </h1>
-        <p className="text-xl text-gray-600 mt-6 leading-relaxed">
+
+        {/* Paragraph */}
+        <p className="text-base sm:text-lg md:text-xl text-white/90 mt-4 sm:mt-6 leading-relaxed animate-fade-in">
           Join thousands of successful traders who've transformed their financial future with our comprehensive trading education platform.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 mt-8">
-          <Link to="/signup">
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 mt-6 sm:mt-8 animate-fade-in">
+          <Link to="/signup" className="w-full sm:w-auto">
             <Button size="lg" className="w-full sm:w-auto group">
               Start Learning Today
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
-          <Link to="#features">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto">
+          <Link to="#features" className="w-full sm:w-auto">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto text-white border-white">
               Explore Features
             </Button>
           </Link>
         </div>
-        <div className="flex items-center space-x-6 mt-8">
+
+        {/* Social Proof */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 mt-6 sm:mt-8 space-y-4 sm:space-y-0 animate-fade-in">
           <div className="flex items-center space-x-2">
             <div className="flex -space-x-2">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-8 h-8 bg-primary-100 rounded-full border-2 border-white"></div>
+                <div
+                  key={i}
+                  className="w-8 h-8 bg-primary-100 rounded-full border-2 border-white"
+                />
               ))}
             </div>
-            <span className="text-sm text-gray-600">5,000+ Students</span>
+            <span className="text-sm text-white/90">5,000+ Students</span>
           </div>
           <div className="flex items-center space-x-1">
             {[1, 2, 3, 4, 5].map((i) => (
-              <Star key={i} className="w-4 h-4 fill-primary-500 text-primary-500" />
+              <Star
+                key={i}
+                className="w-4 h-4 fill-primary-500 text-primary-500"
+              />
             ))}
-            <span className="text-sm text-gray-600 ml-1">4.9/5 Rating</span>
+            <span className="text-sm text-white/90 ml-1">4.9/5 Rating</span>
           </div>
         </div>
-      </div>
 
-      {/* Optional: still include floating image if needed */}
-      {/* <div className="animate-float lg:block hidden relative z-10">
-        <img
-          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
-          alt="Trading Dashboard"
-          className="rounded-2xl shadow-2xl"
-        />
-      </div> */}
-    </div>
+      </div>
+      
+      
+    </section>
+
+    {/* <div className="relative py-12 px-6 bg-white/70 backdrop-blur-md rounded-2xl shadow-lg overflow-hidden">
+  <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Our Trusted Tools</h2>
+  
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-items-center">
+    {[
+      '/icons/tradingview.svg',
+      '/icons/metaTrader.svg',
+      '/icons/binance.svg',
+      '/icons/coinbase.svg',
+      '/icons/kucoin.svg',
+      '/icons/ninjatrader.svg',
+      '/icons/kraken.svg',
+      '/icons/robinhood.svg'
+    ].map((icon, i) => (
+      <div key={i} className="w-20 h-20 p-3 bg-white rounded-full shadow-md animate-float hover:scale-110 transition duration-300">
+        <img src={icon} alt="icon" className="w-full h-full object-contain" />
+      </div>
+    ))}
   </div>
-</section>
+</div> */}
+
+
+
+
+    
+
 
 
       {/* Batches Section */}
@@ -245,135 +282,185 @@ const LandingPage = () => {
 
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose FxStreampro?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our comprehensive platform offers everything you need to succeed in the financial markets
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Users,
-                title: 'Expert Instructors',
-                description: 'Learn from certified professionals with years of market experience'
-              },
-              {
-                icon: Award,
-                title: 'Proven Curriculum',
-                description: 'Industry-recognized courses designed for real-world application'
-              },
-              {
-                icon: TrendingUp,
-                title: 'Live Trading Sessions',
-                description: 'Practice with real market data in our simulated environment'
-              },
-              {
-                icon: Shield,
-                title: 'Risk Management',
-                description: 'Master the art of protecting your capital while maximizing returns'
-              },
-              {
-                icon: Clock,
-                title: 'Flexible Learning',
-                description: 'Study at your own pace with 24/7 access to course materials'
-              },
-              {
-                icon: Target,
-                title: 'Results-Driven',
-                description: 'Track your progress with detailed analytics and performance metrics'
-              }
-            ].map((feature, index) => (
-              <Card key={index} className="hover-lift cursor-pointer border-0 shadow-lg">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <feature.icon className="h-8 w-8 text-primary-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section id="features" className="py-20 bg-slate-800 text-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+        Why Choose FxStreampro?
+      </h2>
+      <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+        Our comprehensive platform offers everything you need to succeed in the financial markets
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[
+        {
+          icon: Users,
+          title: 'Expert Instructors',
+          description: 'Learn from certified professionals with years of market experience'
+        },
+        {
+          icon: Award,
+          title: 'Proven Curriculum',
+          description: 'Industry-recognized courses designed for real-world application'
+        },
+        {
+          icon: TrendingUp,
+          title: 'Live Trading Sessions',
+          description: 'Practice with real market data in our simulated environment'
+        },
+        {
+          icon: Shield,
+          title: 'Risk Management',
+          description: 'Master the art of protecting your capital while maximizing returns'
+        },
+        {
+          icon: Clock,
+          title: 'Flexible Learning',
+          description: 'Study at your own pace with 24/7 access to course materials'
+        },
+        {
+          icon: Target,
+          title: 'Results-Driven',
+          description: 'Track your progress with detailed analytics and performance metrics'
+        }
+      ].map((feature, index) => (
+        <Card
+  key={index}
+  className="bg-slate-700 text-white border border-slate-600 hover:shadow-[0_6px_30px_rgba(34,197,94,0.6)] transition-shadow duration-300 transform hover:-translate-y-1 rounded-xl"
+>
+  <CardContent className="p-8 text-center">
+    <div className="w-16 h-16 bg-primary-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
+      <feature.icon className="h-8 w-8 text-primary-500" />
+    </div>
+    <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+    <p className="text-slate-300">{feature.description}</p>
+  </CardContent>
+</Card>
+
+
+
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* YouTube Video Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Learn from the Experts
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Watch our latest trading insights and educational content
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
-              <iframe
-                className="w-full h-full"
-                src="https://youtube.com/embed/90krrETzzf4"
-                title="FxStreampro Educational Content"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="text-center mt-8">
-              <a
-                href="https://www.youtube.com/@fxstreampro"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-medium"
-              >
-                <Youtube className="h-5 w-5" />
-                <span>Visit our YouTube Channel</span>
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section className="py-20 bg-gradient-to-b from-white via-slate-50 to-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Learn from the Experts
+      </h2>
+      <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        Watch our latest trading insights and educational content
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+      {/* Video 1 */}
+      <div className="group aspect-video rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_8px_40px_rgba(22,105,122,0.25)] transition-shadow duration-500">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/90krrETzzf4"
+          title="FxStreampro Video 1"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+
+      {/* Video 2 */}
+      <div className="group aspect-video rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_8px_40px_rgba(22,105,122,0.25)] transition-shadow duration-500">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/i26T2uaCthE?si=9El6YFMH7TP2FpUL"
+          title="FxStreampro Video 2"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+
+      {/* Video 3 */}
+      <div className="group aspect-video rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_8px_40px_rgba(22,105,122,0.25)] transition-shadow duration-500">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/VO60jC630Ko?si=R8qtomm0bt9mhyRn"
+          title="FxStreampro Video 3"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+
+      {/* Video 4 */}
+      <div className="group aspect-video rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_8px_40px_rgba(22,105,122,0.25)] transition-shadow duration-500">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/YPk61QGbOBo?si=5dk_zQIZEi9Jj6-b"
+          title="FxStreampro Video 4"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+    </div>
+
+    <div className="text-center mt-12">
+      <a
+        href="https://www.youtube.com/@fxstreampro"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-medium"
+      >
+        <Youtube className="h-5 w-5" />
+        <span>Visit our YouTube Channel</span>
+        <ExternalLink className="h-4 w-4" />
+      </a>
+    </div>
+  </div>
+</section>
+
+
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary-600">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Transform Your Trading?
-          </h2>
-          <p className="text-xl text-primary-100 mb-8">
-            Join thousands of successful traders and start your journey today
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/signup">
-              <Button size="lg" variant="secondary" className="bg-white text-primary-600 hover:bg-gray-100">
-                Get Started Now
-              </Button>
-            </Link>
-            <Link to="/login">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary-600">
-                Sign In
-              </Button>
-            </Link>
-          </div>
+      {/* <section className="py-16 bg-gray-900 text-white text-center">
+      <h2 className="text-4xl font-bold mb-8">Our Impact</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 max-w-4xl mx-auto">
+        <div>
+          <h3 className="text-5xl font-bold text-yellow-400">
+            <CountUp end={5000} duration={3} />
+            +
+          </h3>
+          <p className="mt-2 text-lg">Students Trained</p>
         </div>
-      </section>
+        <div>
+          <h3 className="text-5xl font-bold text-green-400">
+            <CountUp end={120} duration={3} />
+          </h3>
+          <p className="mt-2 text-lg">Batches Completed</p>
+        </div>
+        <div>
+          <h3 className="text-5xl font-bold text-blue-400">
+            <CountUp end={98} duration={3} suffix="%" />
+          </h3>
+          <p className="mt-2 text-lg">Success Rate</p>
+        </div>
+      </div>
+    </section> */}
+    <StatsSection></StatsSection>
+  
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-20 bg-white">
+      <section id="gallery" className="py-20 bg-gray-800  from-indigo-50 to-white border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl text-gray-100 font-bold  mb-4">
               Our Learning Environment
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               Take a look at our state-of-the-art facilities and learning atmosphere
             </p>
           </div>
@@ -473,54 +560,70 @@ const LandingPage = () => {
 
       {/* Testimonials Section */}
       <section className="py-20 bg-white">
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              What Our Students Say
-            </h2>
-            <p className="text-xl text-gray-600">Real stories from real traders</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Alex Thompson',
-                role: 'Day Trader',
-                content: 'FxStreampro transformed my trading completely. The risk management techniques alone have saved me thousands.',
-                rating: 5
-              },
-              {
-                name: 'Maria Rodriguez',
-                role: 'Investment Consultant',
-                content: 'The comprehensive curriculum and expert instructors make this the best trading education platform available.',
-                rating: 5
-              },
-              {
-                name: 'David Kim',
-                role: 'Portfolio Manager',
-                content: 'I went from losing money to consistent profitability in just 6 months. Highly recommended!',
-                rating: 5
-              }
-            ].map((testimonial, index) => (
-              <Card key={index} className="border-0 shadow-lg">
-                <CardContent className="p-8">
-                  <div className="flex items-center space-x-1 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-primary-500 text-primary-500" />
-                    ))}
-                  </div>
-                  <p className="text-gray-600 mb-6 italic">"{testimonial.content}"</p>
-                  <div>
-                    <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                    <div className="text-sm text-gray-500">{testimonial.role}</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        What Our Students Say
+      </h2>
+      <p className="text-xl text-gray-600">Real stories from real traders</p>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {[
+        {
+          name: 'Alex Thompson',
+          role: 'Day Trader',
+          content:
+            'FxStreampro transformed my trading completely. The risk management techniques alone have saved me thousands.',
+          rating: 5
+        },
+        {
+          name: 'Maria Rodriguez',
+          role: 'Investment Consultant',
+          content:
+            'The comprehensive curriculum and expert instructors make this the best trading education platform available.',
+          rating: 5
+        },
+        {
+          name: 'David Kim',
+          role: 'Portfolio Manager',
+          content:
+            'I went from losing money to consistent profitability in just 6 months. Highly recommended!',
+          rating: 5
+        }
+      ].map((testimonial, index) => {
+        const bgColors = [
+          'bg-[#f0fdf4]', // light green
+          'bg-[#f0f9ff]', // light blue
+          'bg-[#fdf2f8]'  // light pink
+        ];
+        return (
+          <Card
+            key={index}
+            className={`${bgColors[index % bgColors.length]} border border-slate-200 transition-shadow duration-300 hover:shadow-[0_10px_35px_rgba(22,105,122,0.35)]`}
+          >
+            <CardContent className="p-8">
+              <div className="flex items-center space-x-1 mb-4">
+                {[...Array(testimonial.rating)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className="w-4 h-4 fill-primary-500 text-primary-500"
+                  />
+                ))}
+              </div>
+              <p className="text-gray-700 mb-6 italic">"{testimonial.content}"</p>
+              <div>
+                <div className="font-semibold text-gray-900">{testimonial.name}</div>
+                <div className="text-sm text-gray-600">{testimonial.role}</div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
 
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-gray-900 text-white">
