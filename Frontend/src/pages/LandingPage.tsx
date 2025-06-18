@@ -9,49 +9,8 @@ import StatsSection from '@/components/StatsSection';
 
 
 const LandingPage = () => {
-  const batches = [
-    {
-      id: 1,
-      title: "Smart Volume Concept",
-      mode: "Online",
-      language: "Hindi",
-      startDate: "2024-07-15",
-      duration: "8 weeks",
-      price: "₹15,000",
-      googleFormUrl: "https://forms.google.com/example1"
-    },
-    {
-      id: 2,
-      title: "Smart Volume Concept", 
-      mode: "Offline",
-      language: "Hindi",
-      startDate: "2024-07-15",
-      duration: "8 weeks",
-      price: "₹15,000",
-      googleFormUrl: "https://forms.google.com/example2"
-    },
-    {
-      id: 3,
-      title: "Smart Volume Concept",
-      mode: "Online",
-      language: "Marathi",
-      startDate: "2024-07-15",
-      duration: "8 weeks",
-      price: "₹15,000",
-      googleFormUrl: "https://forms.google.com/example3"
-    },
-    {
-      id: 4,
-      title: "Smart Volume concept",
-      mode: "Offline", 
-      language: "Marathi",
-      startDate: "2024-07-15",
-      duration: "8 weeks",
-      price: "₹15,000",
-      googleFormUrl: "https://forms.google.com/example4"
-    }
-  ];
-
+  
+  const rating=4.5;
   const galleryImages = [
     {
       id: 1,
@@ -122,15 +81,28 @@ const LandingPage = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 mt-6 sm:mt-8 animate-fade-in">
           <Link to="/signup" className="w-full sm:w-auto">
-            <Button size="lg" className="w-full sm:w-auto group">
+            <Button size="lg" className="w-full sm:w-auto group bg-gradient-to-r from-[#1A2980] via-[#26D0CE] to-[#1A2980] 
+  bg-[length:200%_auto] hover:bg-[position:right_center] 
+  transition-all duration-500 text-white font-semibold 
+  uppercase px-10 py-4 rounded-lg shadow-md">
               Start Learning Today
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
           <Link to="#features" className="w-full sm:w-auto">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto text-white border-white">
-              Explore Features
-            </Button>
+          <Button
+  variant="outline"
+  size="lg"
+  className="w-full sm:w-auto text-white border-white 
+    bg-gradient-to-r from-[#DC2424] via-[#4A569D] to-[#DC2424]
+    bg-[length:200%_auto] hover:bg-[position:right_center]
+    transition-[background-position] duration-500 ease-in-out
+    uppercase font-semibold text-sm
+    px-6 py-2 rounded-md "
+>
+  Explore Features
+</Button>
+
           </Link>
         </div>
 
@@ -147,15 +119,32 @@ const LandingPage = () => {
             </div>
             <span className="text-sm text-white/90">5,000+ Students</span>
           </div>
-          <div className="flex items-center space-x-1">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <Star
-                key={i}
-                className="w-4 h-4 fill-primary-500 text-primary-500"
-              />
-            ))}
-            <span className="text-sm text-white/90 ml-1">4.9/5 Rating</span>
-          </div>
+          
+
+<div className="flex items-center space-x-1">
+  {[1, 2, 3, 4, 5].map((i) => {
+    if (i <= Math.floor(rating)) {
+      // Full star
+      return <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />;
+    } else if (i === Math.ceil(rating) && rating % 1 >= 0.25) {
+      // Half star
+      return (
+        <div key={i} className="w-4 h-4 relative flex items-center justify-center overflow-hidden">
+          <Star className="w-4 h-4 text-gray-400 fill-gray-400 absolute" />
+          <Star
+            className="w-4 h-4 text-yellow-400 fill-yellow-400 absolute"
+            style={{ clipPath: 'inset(0 50% 0 0)' }}
+          />
+        </div>
+      );
+    } else {
+      // Empty star
+      return <Star key={i} className="w-4 h-4 text-gray-400 fill-gray-400" />;
+    }
+  })}
+  <span className="text-sm text-white/90 ml-1">{rating}/5 Rating</span>
+</div>
+
         </div>
 
       </div>
@@ -193,92 +182,199 @@ const LandingPage = () => {
 
       {/* Batches Section */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Upcoming Trading Batches
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose from our carefully designed courses available in Hindi and Marathi
-            </p>
-          </div>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-12">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Upcoming Trading Batches
+      </h2>
+      <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        Learn online or offline – Choose your preferred date and language
+      </p>
+    </div>
+
+    <div className="flex flex-col lg:flex-row gap-12 items-start">
+      {/* Left Side Image */}
+      <div className="w-full lg:w-1/2">
+        <img
+          src="/i.jpg"
+          alt="Trading Illustration"
+          className="w-full h-auto rounded-lg shadow-md"
+        />
+      </div>
+
+      {/* Right Side Table-Style Batches */}
+      <div className="w-full lg:w-[620px] bg-white rounded-2xl shadow-md overflow-hidden">
+  <div className="overflow-x-auto">
+    <table className="min-w-full text-lg text-left table-auto">
+      <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+        <tr>
+          <th className="px-5 py-4">Mode</th>
+          <th className="px-5 py-4">Date</th>
+          <th className="px-5 py-4">Language / Time</th>
+          <th className="px-5 py-4 text-right"></th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-gray-200 text-gray-700">
+        {[
+          {
+            mode: "Online",
+            date: "21 June",
+            time: "Hindi | 6:00 PM – 9:00 PM IST",
+            link: "https://forms.gle/example1"
+          },
+          {
+            mode: "Offline",
+            date: "22 June",
+            time: "Hindi | 11:00 AM – 1:00 PM IST",
+            link: "https://forms.gle/example2"
+          },
+          {
+            mode: "Offline",
+            date: "28 June",
+            time: "Marathi | 11:00 AM – 1:00 PM IST",
+            link: "https://forms.gle/example3"
+          },
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {batches.map((batch) => (
-              <Card key={batch.id} className="hover-lift cursor-pointer border-0 shadow-lg bg-white">
-                <CardContent className="p-8">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold text-gray-900">{batch.title}</h3>
-                    <span className="text-2xl font-bold text-primary-600">{batch.price}</span>
-                  </div>
-                  
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <Globe className="h-4 w-4 text-gray-500" />
-                        <span className="text-sm text-gray-600">Mode:</span>
-                      </div>
-                      <span className={`text-sm font-medium px-3 py-1 rounded-full ${
-                        batch.mode === 'Online' 
-                          ? 'bg-blue-100 text-blue-800' 
-                          : 'bg-green-100 text-green-800'
-                      }`}>
-                        {batch.mode}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <Users className="h-4 w-4 text-gray-500" />
-                        <span className="text-sm text-gray-600">Language:</span>
-                      </div>
-                      <span className="text-sm font-medium text-gray-900">{batch.language}</span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <Calendar className="h-4 w-4 text-gray-500" />
-                        <span className="text-sm text-gray-600">Start Date:</span>
-                      </div>
-                      <span className="text-sm font-medium text-gray-900">
-                        {new Date(batch.startDate).toLocaleDateString('en-IN')}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <Clock className="h-4 w-4 text-gray-500" />
-                        <span className="text-sm text-gray-600">Duration:</span>
-                      </div>
-                      <span className="text-sm font-medium text-gray-900">{batch.duration}</span>
-                    </div>
-                  </div>
-                  
-                  <Button 
-                    className="w-full group"
-                    onClick={() => window.open(batch.googleFormUrl, '_blank')}
-                  >
-                    Register Now
-                    <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link to="/signup">
-              <Button size="lg" variant="outline">
-                View All Batches
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+        ].map((batch, i) => (
+          <tr key={i} className="hover:bg-gray-50 transition">
+            <td className="px-5 py-5">
+              <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                batch.mode === "Online"
+                  ? "bg-green-100 text-green-600"
+                  : "bg-yellow-100 text-yellow-700"
+              }`}>
+                {batch.mode}
+              </span>
+            </td>
+            <td className="px-5 py-5 font-medium">{batch.date}</td>
+            <td className="px-5 py-5">{batch.time}</td>
+            <td className="px-5 py-5 text-right">
+              <a
+                href={batch.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-yellow-400 hover:bg-yellow-500 text-white text-sm font-bold px-5 py-2.5 rounded-full transition whitespace-nowrap"
+              >
+                Register Now
+              </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    </div>
+  </div>
+</section>
+
+
 
           {/* About Section */}
-          
+          <section
+  className="relative py-20 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage: "url('/trading.jpg')", // Replace with your actual image path
+  }}
+>
+  {/* Dark blur overlay */}
+  <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+  <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-white">
+    <h2 className="text-4xl font-extrabold text-center mb-12">
+      Smart Money & Smart Volume Concepts
+    </h2>
+
+    {/* Concept Details */}
+    <div className="grid md:grid-cols-2 gap-12">
+      {/* SMC */}
+      <div className="bg-white/10 p-6 rounded-xl border border-white/20 shadow-lg">
+        <h3 className="text-2xl font-bold text-[#ffb703] mb-4">Smart Money Concept (SMC)</h3>
+        <p className="text-sm leading-relaxed mb-4">
+          The Smart Money Concept is centered around analyzing the actions of large financial
+          institutions (banks, hedge funds) that influence market direction. It helps retail
+          traders understand how these entities operate and how to align trades with their activity
+          rather than against it.
+        </p>
+        <h4 className="text-lg font-semibold mb-2">What you'll learn:</h4>
+        <ul className="list-disc list-inside text-sm space-y-1">
+          <li>Understanding market structure: BOS, CHoCH, and internal/external structure</li>
+          <li>Identifying and trading from order blocks</li>
+          <li>Liquidity sweeps and false breakouts</li>
+          <li>Imbalance & mitigation concepts</li>
+          <li>SMC-based entry models with tight stop losses</li>
+        </ul>
+      </div>
+
+      {/* SVC */}
+      <div className="bg-white/10 p-6 rounded-xl border border-white/20 shadow-lg">
+        <h3 className="text-2xl font-bold text-[#ffb703] mb-4">Smart Volume Concept (SVC)</h3>
+        <p className="text-sm leading-relaxed mb-4">
+          Smart Volume Concept focuses on volume as the fuel behind price action. It teaches traders
+          how to interpret volume to confirm trends, detect accumulation/distribution, and catch
+          major moves before they happen.
+        </p>
+        <h4 className="text-lg font-semibold mb-2">What you'll learn:</h4>
+        <ul className="list-disc list-inside text-sm space-y-1">
+          <li>Reading volume bars and clusters correctly</li>
+          <li>Spotting absorption and exhaustion patterns</li>
+          <li>Volume divergence with price action</li>
+          <li>Understanding high volume nodes (HVN) & low volume nodes (LVN)</li>
+          <li>Combining SVC with market structure for confluence entries</li>
+        </ul>
+      </div>
+    </div>
+
+    {/* Comparison Table */}
+    {/* Comparison Table */}
+<div className="mt-16 overflow-x-auto max-w-full">
+  <div className="min-w-[700px] bg-white/10 p-6 rounded-xl border border-white/20 shadow-lg">
+    <h3 className="text-2xl font-bold text-white mb-4 text-center">SMC vs SVC</h3>
+    <table className="w-full text-sm text-white border-collapse">
+      <thead>
+        <tr className="text-left border-b border-white/30">
+          <th className="p-3">Aspect</th>
+          <th className="p-3">Smart Money Concept (SMC)</th>
+          <th className="p-3">Smart Volume Concept (SVC)</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-white/10">
+        <tr>
+          <td className="p-3">Core Focus</td>
+          <td className="p-3">Institutional price manipulation & structure</td>
+          <td className="p-3">Volume confirmation of price moves</td>
+        </tr>
+        <tr>
+          <td className="p-3">Tools Used</td>
+          <td className="p-3">Order blocks, BOS, liquidity zones</td>
+          <td className="p-3">Volume profile, divergence, delta</td>
+        </tr>
+        <tr>
+          <td className="p-3">Best For</td>
+          <td className="p-3">Price action and structure traders</td>
+          <td className="p-3">Volume-based confirmation and scalpers</td>
+        </tr>
+        <tr>
+          <td className="p-3">Learning Curve</td>
+          <td className="p-3">Medium to advanced</td>
+          <td className="p-3">Beginner to intermediate</td>
+        </tr>
+        <tr>
+          <td className="p-3">Risk Management</td>
+          <td className="p-3">Based on structural invalidation</td>
+          <td className="p-3">Based on volume absorption/shift</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  </div>
+      </section>
+
+
+
 
 
       {/* Features Section */}
@@ -347,7 +443,10 @@ const LandingPage = () => {
 </section>
 
       {/* YouTube Video Section */}
-      <section className="py-20 bg-gradient-to-b from-white via-slate-50 to-white">
+      <section className="py-20 bg-gradient-to-b from-white via-slate-50 to-white "
+      
+      >
+      
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="text-center mb-16">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -454,7 +553,9 @@ const LandingPage = () => {
   
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-20 bg-gray-800  from-indigo-50 to-white border-t border-gray-200">
+      <section id="gallery" className="py-20 bg-gray-800  from-indigo-50 to-white border-t border-gray-200"
+      
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl text-gray-100 font-bold  mb-4">
@@ -489,13 +590,26 @@ const LandingPage = () => {
       {/* Broker and socail media link */}
 
 {/* // Broker & Social Media Section */}
-<section className="relative py-20 bg-gradient-to-br from-indigo-50 to-white border-t border-gray-200">
-  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-  <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
+<section
+  className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
+  
+>
+<div
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat filter blur-sm scale-100 z-0"
+    style={{
+      backgroundImage: `url('/yt_section.jpg')`,
+    }}
+  ></div>
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black/50 z-0"></div>
+
+  {/* Glassmorphism Content Box */}
+  <div className="relative z-10 mx-4 sm:ml-10 p-6 sm:p-10 max-w-5xl rounded-2xl backdrop-blur-md bg-white/20 border border-white/30 shadow-lg text-center">
+
+    <h2 className="text-4xl font-extrabold text-white mb-4 tracking-tight">
       Our Trusted Broker Partners
     </h2>
-    <p className="text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
+    <p className="text-white/90 text-lg mb-12 max-w-2xl mx-auto">
       We collaborate with globally recognized brokers to ensure seamless trading experiences for our community.
     </p>
 
@@ -514,15 +628,15 @@ const LandingPage = () => {
           href={broker.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-1 border border-gray-200 w-48 flex items-center justify-center"
+          className="bg-white/80 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-1 border border-gray-200 w-48 flex items-center justify-center"
         >
           <img src={broker.logo} alt={broker.name} className="h-12 object-contain" />
         </a>
       ))}
     </div>
 
-    <h3 className="text-2xl font-bold text-gray-800 mb-4">Join Our Trading Community</h3>
-    <p className="text-gray-600 text-md mb-8">Stay connected and never miss a market move.</p>
+    <h3 className="text-2xl font-bold text-white mb-4">Join Our Trading Community</h3>
+    <p className="text-white/90 text-md mb-8">Stay connected and never miss a market move.</p>
 
     <div className="flex flex-wrap justify-center gap-6">
       <a
@@ -550,9 +664,8 @@ const LandingPage = () => {
         <Instagram className="h-5 w-5" /> <span>Instagram</span>
       </a>
     </div>
+
   </div>
-    <div className="mt-20 border-b border-gray-300 shadow-sm pt-8 ">
-      </div>
 </section>
 
 

@@ -14,7 +14,6 @@ const Navbar = () => {
     logout();
     navigate('/');
   };
-
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/#about', label: 'About' },
@@ -24,7 +23,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-[#fdfbf7] backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -57,7 +56,7 @@ const Navbar = () => {
                   className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors"
                 >
                   <User className="h-4 w-4" />
-                  <span>{user.name}</span>
+                  <span>{user.fullName}</span>
                 </Link>
                 <Button
                   onClick={handleLogout}
@@ -71,13 +70,31 @@ const Navbar = () => {
               </div>
             ) : (
               <>
-                <Link to="/login">
-                  <Button variant="outline">Login</Button>
-                </Link>
-                <Link to="/signup">
-                  <Button>Get Started</Button>
-                </Link>
-              </>
+              <Link to="/login">
+                <Button
+                  className="bg-transparent border-2 border-[#ffb703] text-[#ffb703] 
+                             hover:bg-[#ffb703] hover:text-white 
+                             rounded-full px-6 py-2 font-semibold 
+                             transition-all duration-300 ease-in-out 
+                             hover:scale-105 shadow-md"
+                >
+                  Login
+                </Button>
+              </Link>
+            
+              <Link to="/signup">
+                <Button
+                  className="bg-[#16697a] text-white 
+                             hover:bg-[#ffb703] hover:text-[#16697a] 
+                             rounded-full px-6 py-2 font-semibold 
+                             transition-all duration-300 ease-in-out 
+                             hover:scale-105 shadow-md ml-4"
+                >
+                  Get Started
+                </Button>
+              </Link>
+            </>
+            
             )}
           </div>
 
