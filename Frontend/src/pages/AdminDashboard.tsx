@@ -169,7 +169,15 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div className="p-6 flex flex-col items-center min-h-screen bg-gray-50">
+    <div className="p-6 flex flex-col items-center min-h-screen bg-cover bg-center bg-no-repeat"
+    style={{
+      backgroundImage: "url('/admin1.png')",
+      backgroundAttachment: "fixed",
+      backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center center',
+    
+    }}>
       {/* Header */}
       <div className="flex justify-between items-center mb-6 w-full max-w-4xl">
         <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
@@ -251,27 +259,57 @@ const AdminDashboard = () => {
       {/* Batches List */}
       <div className="grid gap-6 w-full max-w-4xl">
         {filteredBatches.map(batch => (
-          <Card key={batch.id} className="shadow-md rounded-md">
-            <CardHeader className="flex justify-between bg-gray-100 p-4 rounded-t-md">
-              <div>
-                <CardTitle className="text-lg font-semibold text-blue-700">{batch.batchName}</CardTitle>
-                <p className="text-sm text-gray-600">{batch.description}</p>
-              </div>
-              <div className="flex space-x-2">
-                <Button size="sm" variant="outline" onClick={() => handleViewUsers(batch.id)}><Eye className="h-4 w-4" /></Button>
-                <Button size="sm" variant="outline" onClick={() => openEditModal(batch)}><Edit className="h-4 w-4" /></Button>
-                <Button size="sm" variant="destructive" onClick={() => handleDeleteBatch(batch.id)}><Trash2 className="h-4 w-4" /></Button>
-              </div>
-            </CardHeader>
-            <CardContent className="bg-white p-4 border-t text-sm text-gray-700 space-y-1">
-              <p><strong>Start:</strong> {new Date(batch.startDate).toLocaleDateString()}</p>
-              <p><strong>Duration:</strong> {batch.duration}</p>
-              <p><strong>Price:</strong> ₹{batch.price}</p>
-              <p><strong>Slots:</strong> {(batch.registeredUsers?.length || 0)}/{batch.totalSlots}</p>
-              <p><strong>Mode:</strong> {batch.mode}</p>
-              <p><strong>Language:</strong> {batch.language}</p>
-            </CardContent>
-          </Card>
+       <Card
+       key={batch.id}
+       className="bg-white/20 backdrop-blur-lg border border-white/30 shadow-xl rounded-xl transition-all duration-300"
+     >
+       <CardHeader className="flex justify-between p-4 rounded-t-xl border-b border-white/20 bg-white/10">
+         <div>
+           <CardTitle className="text-xl font-bold text-[#072134] tracking-tight">
+             {batch.batchName}
+           </CardTitle>
+           <p className="text-sm text-[#0d3e61] font-medium mt-1">{batch.description}</p>
+         </div>
+         <div className="flex space-x-2">
+           <Button
+             size="sm"
+             className="bg-[#135b8e]/20 border border-[#135b8e] text-[#135b8e] font-semibold hover:bg-[#135b8e]/30 transition"
+             onClick={() => handleViewUsers(batch.id)}
+           >
+             <Eye className="h-4 w-4" />
+           </Button>
+           <Button
+             size="sm"
+             className="bg-[#ffc736]/20 border border-[#ffc736] text-[#072134] font-semibold hover:bg-[#ffc736]/30 transition"
+             onClick={() => openEditModal(batch)}
+           >
+             <Edit className="h-4 w-4" />
+           </Button>
+           <Button
+             size="sm"
+             variant="destructive"
+             className="bg-[#d62839]/20 border border-[#d62839] text-[#d62839] font-semibold hover:bg-[#d62839]/30 transition"
+             onClick={() => handleDeleteBatch(batch.id)}
+           >
+             <Trash2 className="h-4 w-4" />
+           </Button>
+         </div>
+       </CardHeader>
+     
+       <CardContent className="p-4 text-sm text-[#072134] space-y-1 font-medium">
+         <p><span className="text-[#0d3e61] font-bold">Start:</span> {new Date(batch.startDate).toLocaleDateString()}</p>
+         <p><span className="text-[#0d3e61] font-bold">Duration:</span> {batch.duration}</p>
+         <p><span className="text-[#0d3e61] font-bold">Price:</span> ₹{batch.price}</p>
+         <p><span className="text-[#0d3e61] font-bold">Slots:</span> {(batch.registeredUsers?.length || 0)}/{batch.totalSlots}</p>
+         <p><span className="text-[#0d3e61] font-bold">Mode:</span> {batch.mode}</p>
+         <p><span className="text-[#0d3e61] font-bold">Language:</span> {batch.language}</p>
+       </CardContent>
+     </Card>
+     
+      
+       
+       
+       
         ))}
       </div>
 

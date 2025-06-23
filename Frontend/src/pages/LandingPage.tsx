@@ -272,7 +272,7 @@ const LandingPage = () => {
 
 
           {/* About Section */}
-          <section
+          <section id="about"
   className="relative py-20 bg-cover bg-center bg-no-repeat"
   style={{
     backgroundImage: "url('/trading.jpg')", // Replace with your actual image path

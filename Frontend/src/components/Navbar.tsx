@@ -14,6 +14,19 @@ const Navbar = () => {
     logout();
     navigate('/');
   };
+
+  const handleHashLink = (hash: string) => {
+    if (window.location.pathname !== '/') {
+      navigate('/' + hash); // Navigate to homepage + scroll
+    } else {
+      const target = document.querySelector(hash);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/#about', label: 'About' },
@@ -21,6 +34,15 @@ const Navbar = () => {
     { href: '/#gallery', label: 'Gallery' },
     { href: '/#contact', label: 'Contact' },
   ];
+  {navLinks.map((link) => (
+    <button
+      key={link.href}
+      onClick={() => handleHashLink(link.href)}
+      className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
+    >
+      {link.label}
+    </button>
+  ))}
 
   return (
     <nav className="bg-[#fdfbf7] backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">

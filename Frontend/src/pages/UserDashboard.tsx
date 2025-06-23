@@ -49,24 +49,35 @@ const UserDashboard = () => {
     console.log('View details for batch:', batchId);
   };
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                Welcome back, {user?.fullName}!
-              </h1>
-              <p className="text-gray-600">Continue your trading education journey</p>
-            </div>
-            <Link to="/">
-              <Button variant="outline" className="flex items-center space-x-2">
-                <TrendingUp className="h-4 w-4" />
-                <span>Back to Home</span>
-              </Button>
-            </Link>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gray-50"
+    style={{
+      backgroundImage: "url('/user_dashboard.jpg')",
+      backgroundAttachment: "fixed",
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center center',
+    }}
+    >
+      <div className="bg-white border-b border-gray-200"
+      
+      >
+        <div className="bg-gradient-to-r from-[#0f2027] via-[#203a43] to-[#2c5364] text-white shadow-md rounded-b-xl">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="flex items-center justify-between">
+      <div>
+        <h1 className="text-2xl font-bold text-white">
+          Welcome back, {user?.fullName}!
+        </h1>
+        <p className="text-gray-300">Continue your trading education journey</p>
+      </div>
+      <Link to="/">
+      
+
+      </Link>
+    </div>
+  </div>
+</div>
+
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -100,7 +111,8 @@ const UserDashboard = () => {
         )}
 
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-6"
+          >
             <h2 className="text-2xl font-bold text-gray-900">All Available Courses</h2>
             <div className="flex items-center space-x-4">
               <div className="relative">
@@ -137,19 +149,30 @@ const UserDashboard = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredBatches.map((batch) => (
-              <Card key={batch.id} className="overflow-hidden">
-                <img src={batch.thumbnail} alt={batch.batchName} className="w-full h-40 object-cover" />
-                <CardContent className="p-4 space-y-3">
-                  <h3 className="text-lg font-semibold text-gray-900">{batch.batchName}</h3>
-                  <p className="text-sm text-gray-600">{batch.description}</p>
-                  <p className="text-sm text-gray-500">Start Date: {new Date(batch.startDate).toLocaleDateString()}</p>
-                  <EnrollButton
-                    amount={batch.price}
-                    batchId={batch.id}
-                    batchName={batch.batchName}
-                  />
-                </CardContent>
-              </Card>
+              <Card
+              key={batch.id}
+              className="bg-gradient-to-br from-[#0f2027] to-[#2c5364] text-white border border-white/10 shadow-xl rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300"
+            >
+              <img
+                src={batch.thumbnail}
+                alt={batch.batchName}
+                className="w-full h-40 object-cover"
+              />
+              <CardContent className="p-4 space-y-3">
+                <h3 className="text-lg font-semibold text-white">{batch.batchName}</h3>
+                <p className="text-sm text-slate-300">{batch.description}</p>
+                <p className="text-sm text-slate-400">
+                  Start Date: {new Date(batch.startDate).toLocaleDateString()}
+                </p>
+                <EnrollButton
+                  amount={batch.price}
+                  batchId={batch.id}
+                  batchName={batch.batchName}
+                />
+              </CardContent>
+            </Card>
+            
+            
             ))}
           </div>
         </div>
