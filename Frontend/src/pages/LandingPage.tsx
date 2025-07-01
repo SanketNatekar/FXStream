@@ -185,7 +185,7 @@ const LandingPage = () => {
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="text-center mb-12">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-        Upcoming Trading Batches
+        Live Batches
       </h2>
       <p className="text-xl text-gray-600 max-w-3xl mx-auto">
         Learn online or offline – Choose your preferred date and language
@@ -204,101 +204,114 @@ const LandingPage = () => {
 
       {/* Right Side Table-Style Batches */}
       <div className="w-full lg:w-[620px] bg-white rounded-2xl shadow-md overflow-hidden">
-  <div className="overflow-x-auto">
-    <table className="min-w-full text-lg text-left table-auto">
-      <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
-        <tr>
-          <th className="px-5 py-4">Mode</th>
-          <th className="px-5 py-4">Date</th>
-          <th className="px-5 py-4">Language / Time</th>
-          <th className="px-5 py-4 text-right"></th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-gray-200 text-gray-700">
-        {[
-          {
-            mode: "Online",
-            date: "21 June",
-            time: "Hindi | 6:00 PM – 9:00 PM IST",
-            link: "https://forms.gle/example1"
-          },
-          {
-            mode: "Offline",
-            date: "22 June",
-            time: "Hindi | 11:00 AM – 1:00 PM IST",
-            link: "https://forms.gle/example2"
-          },
-          {
-            mode: "Offline",
-            date: "28 June",
-            time: "Marathi | 11:00 AM – 1:00 PM IST",
-            link: "https://forms.gle/example3"
-          },
-          
-        ].map((batch, i) => (
-          <tr key={i} className="hover:bg-gray-50 transition">
-            <td className="px-5 py-5">
-              <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                batch.mode === "Online"
-                  ? "bg-green-100 text-green-600"
-                  : "bg-yellow-100 text-yellow-700"
-              }`}>
-                {batch.mode}
-              </span>
-            </td>
-            <td className="px-5 py-5 font-medium">{batch.date}</td>
-            <td className="px-5 py-5">{batch.time}</td>
-            <td className="px-5 py-5 text-right">
-              <a
-                href={batch.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-yellow-400 hover:bg-yellow-500 text-white text-sm font-bold px-5 py-2.5 rounded-full transition whitespace-nowrap"
-              >
-                Register Now
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-lg text-left table-auto">
+            <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+              <tr>
+                <th className="px-5 py-4">Mode</th>
+                <th className="px-5 py-4">Date</th>
+                <th className="px-5 py-4">Language / Time</th>
+                <th className="px-5 py-4 text-right"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 text-gray-700">
+              {[
+                {
+                  mode: "Online",
+                  date: "21 June",
+                  time: "Hindi | 6:00 PM – 9:00 PM IST",
+                  link: "https://forms.gle/example1",
+                },
+                {
+                  mode: "Offline",
+                  date: "22 June",
+                  time: "Hindi | 11:00 AM – 1:00 PM IST",
+                  link: "https://forms.gle/example2",
+                },
+                {
+                  mode: "Offline",
+                  date: "28 June",
+                  time: "Marathi | 11:00 AM – 1:00 PM IST",
+                  link: "https://forms.gle/example3",
+                },
+              ].map((batch, i) => (
+                <tr key={i} className="hover:bg-gray-50 transition">
+                  <td className="px-5 py-5">
+                    <span
+                      className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                        batch.mode === "Online"
+                          ? "bg-green-100 text-green-600"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
+                      {batch.mode}
+                    </span>
+                  </td>
+                  <td className="px-5 py-5 font-medium">{batch.date}</td>
+                  <td className="px-5 py-5">{batch.time}</td>
+                  <td className="px-5 py-5 text-right">
+                    <a
+                      href={batch.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-yellow-400 hover:bg-yellow-500 text-white text-sm font-bold px-5 py-2.5 rounded-full transition whitespace-nowrap"
+                    >
+                      Register Now
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
+        {/* 🎥 Recorded Lectures Button */}
+        <div className="text-center py-6 bg-gray-50 border-t border-gray-200">
+          <a
+            href=" https://rpy.club/courses/tT7xYAdJD2" // Replace with your actual Rigi link
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold text-sm shadow-md hover:bg-blue-700 transition"
+          >
+             View Recorded Lectures
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 
 
-          {/* About Section */}
-          <section id="about"
-  className="relative py-20 bg-cover bg-center bg-no-repeat"
-  style={{
-    backgroundImage: "url('/trading.jpg')", // Replace with your actual image path
-  }}
->
-  {/* Dark blur overlay */}
-  <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
-  <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-white">
+          {/* About Section */}
+          <section
+  id="about"
+  className="relative py-20 bg-gradient-to-br from-gray-200 via-gray-400 to-gray-700 overflow-hidden"
+>
+  {/* 🔹 Faint Radial Pattern Background */}
+  <div
+    className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(209,213,219,0.3)_0%,transparent_60%),radial-gradient(circle_at_80%_80%,rgba(156,163,175,0.3)_0%,transparent_60%)] pointer-events-none z-0"
+  />
+
+  <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-gray-900">
     <h2 className="text-4xl font-extrabold text-center mb-12">
       Smart Money & Smart Volume Concepts
     </h2>
 
-    {/* Concept Details */}
+    {/* 🔹 Concept Cards */}
     <div className="grid md:grid-cols-2 gap-12">
       {/* SMC */}
-      <div className="bg-white/10 p-6 rounded-xl border border-white/20 shadow-lg">
-        <h3 className="text-2xl font-bold text-[#ffb703] mb-4">Smart Money Concept (SMC)</h3>
-        <p className="text-sm leading-relaxed mb-4">
+      <div className="bg-gray-100 p-6 rounded-xl border border-gray-300 shadow-md">
+        <h3 className="text-2xl font-bold text-[#1d3557] mb-4">Smart Money Concept (SMC)</h3>
+        <p className="text-sm leading-relaxed mb-4 text-gray-800">
           The Smart Money Concept is centered around analyzing the actions of large financial
           institutions (banks, hedge funds) that influence market direction. It helps retail
           traders understand how these entities operate and how to align trades with their activity
           rather than against it.
         </p>
-        <h4 className="text-lg font-semibold mb-2">What you'll learn:</h4>
-        <ul className="list-disc list-inside text-sm space-y-1">
+        <h4 className="text-lg font-semibold mb-2 text-gray-900">What you'll learn:</h4>
+        <ul className="list-disc list-inside text-sm space-y-1 text-gray-700">
           <li>Understanding market structure: BOS, CHoCH, and internal/external structure</li>
           <li>Identifying and trading from order blocks</li>
           <li>Liquidity sweeps and false breakouts</li>
@@ -308,15 +321,15 @@ const LandingPage = () => {
       </div>
 
       {/* SVC */}
-      <div className="bg-white/10 p-6 rounded-xl border border-white/20 shadow-lg">
-        <h3 className="text-2xl font-bold text-[#ffb703] mb-4">Smart Volume Concept (SVC)</h3>
-        <p className="text-sm leading-relaxed mb-4">
+      <div className="bg-gray-100 p-6 rounded-xl border border-gray-300 shadow-md">
+        <h3 className="text-2xl font-bold text-[#1d3557] mb-4">Smart Volume Concept (SVC)</h3>
+        <p className="text-sm leading-relaxed mb-4 text-gray-800">
           Smart Volume Concept focuses on volume as the fuel behind price action. It teaches traders
           how to interpret volume to confirm trends, detect accumulation/distribution, and catch
           major moves before they happen.
         </p>
-        <h4 className="text-lg font-semibold mb-2">What you'll learn:</h4>
-        <ul className="list-disc list-inside text-sm space-y-1">
+        <h4 className="text-lg font-semibold mb-2 text-gray-900">What you'll learn:</h4>
+        <ul className="list-disc list-inside text-sm space-y-1 text-gray-700">
           <li>Reading volume bars and clusters correctly</li>
           <li>Spotting absorption and exhaustion patterns</li>
           <li>Volume divergence with price action</li>
@@ -326,52 +339,52 @@ const LandingPage = () => {
       </div>
     </div>
 
-    {/* Comparison Table */}
-    {/* Comparison Table */}
-<div className="mt-16 overflow-x-auto max-w-full">
-  <div className="min-w-[700px] bg-white/10 p-6 rounded-xl border border-white/20 shadow-lg">
-    <h3 className="text-2xl font-bold text-white mb-4 text-center">SMC vs SVC</h3>
-    <table className="w-full text-sm text-white border-collapse">
-      <thead>
-        <tr className="text-left border-b border-white/30">
-          <th className="p-3">Aspect</th>
-          <th className="p-3">Smart Money Concept (SMC)</th>
-          <th className="p-3">Smart Volume Concept (SVC)</th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-white/10">
-        <tr>
-          <td className="p-3">Core Focus</td>
-          <td className="p-3">Institutional price manipulation & structure</td>
-          <td className="p-3">Volume confirmation of price moves</td>
-        </tr>
-        <tr>
-          <td className="p-3">Tools Used</td>
-          <td className="p-3">Order blocks, BOS, liquidity zones</td>
-          <td className="p-3">Volume profile, divergence, delta</td>
-        </tr>
-        <tr>
-          <td className="p-3">Best For</td>
-          <td className="p-3">Price action and structure traders</td>
-          <td className="p-3">Volume-based confirmation and scalpers</td>
-        </tr>
-        <tr>
-          <td className="p-3">Learning Curve</td>
-          <td className="p-3">Medium to advanced</td>
-          <td className="p-3">Beginner to intermediate</td>
-        </tr>
-        <tr>
-          <td className="p-3">Risk Management</td>
-          <td className="p-3">Based on structural invalidation</td>
-          <td className="p-3">Based on volume absorption/shift</td>
-        </tr>
-      </tbody>
-    </table>
+    {/* 🔹 Comparison Table */}
+    <div className="mt-16 overflow-x-auto max-w-full">
+    <div className="bg-gray-100 p-6 rounded-xl border border-gray-300 shadow-md">
+        <h3 className="text-2xl font-bold text-[#1d3557] mb-4 text-center">SMC vs SVC</h3>
+        <table className="w-full text-sm text-gray-800 border-collapse">
+          <thead>
+            <tr className="text-left border-b border-gray-300">
+              <th className="p-3">Aspect</th>
+              <th className="p-3">Smart Money Concept (SMC)</th>
+              <th className="p-3">Smart Volume Concept (SVC)</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            <tr>
+              <td className="p-3">Core Focus</td>
+              <td className="p-3">Institutional price manipulation & structure</td>
+              <td className="p-3">Volume confirmation of price moves</td>
+            </tr>
+            <tr>
+              <td className="p-3">Tools Used</td>
+              <td className="p-3">Order blocks, BOS, liquidity zones</td>
+              <td className="p-3">Volume profile, divergence, delta</td>
+            </tr>
+            <tr>
+              <td className="p-3">Best For</td>
+              <td className="p-3">Price action and structure traders</td>
+              <td className="p-3">Volume-based confirmation and scalpers</td>
+            </tr>
+            <tr>
+              <td className="p-3">Learning Curve</td>
+              <td className="p-3">Medium to advanced</td>
+              <td className="p-3">Beginner to intermediate</td>
+            </tr>
+            <tr>
+              <td className="p-3">Risk Management</td>
+              <td className="p-3">Based on structural invalidation</td>
+              <td className="p-3">Based on volume absorption/shift</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-  </div>
-      </section>
+
 
 
 
@@ -591,52 +604,49 @@ const LandingPage = () => {
 
 {/* // Broker & Social Media Section */}
 <section
-  className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
-  
+  className="relative min-h-screen bg-gradient-to-br from-[#f9f9f9] via-[#e6f0f3] to-[#d0e4f2] bg-cover bg-center bg-no-repeat flex items-center justify-center"
 >
-<div
-    className="absolute inset-0 bg-cover bg-center bg-no-repeat filter blur-sm scale-100 z-0"
-    style={{
-      backgroundImage: `url('/yt_section.jpg')`,
-    }}
+  {/* Optional blur layer (light) */}
+  <div
+    className="absolute inset-0 bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-sm z-0"
   ></div>
-  {/* Dark overlay */}
-  <div className="absolute inset-0 bg-black/50 z-0"></div>
 
   {/* Glassmorphism Content Box */}
-  <div className="relative z-10 mx-4 sm:ml-10 p-6 sm:p-10 max-w-5xl rounded-2xl backdrop-blur-md bg-white/20 border border-white/30 shadow-lg text-center">
-
-    <h2 className="text-4xl font-extrabold text-white mb-4 tracking-tight">
+  <div className="relative z-10 mx-4 sm:ml-10 p-6 sm:p-10 max-w-5xl rounded-2xl backdrop-blur-md bg-white/60 border border-white/40 shadow-lg text-center">
+    <h2 className="text-4xl font-extrabold text-[#1d3557] mb-4 tracking-tight">
       Our Trusted Broker Partners
     </h2>
-    <p className="text-white/90 text-lg mb-12 max-w-2xl mx-auto">
+    <p className="text-[#0d3e61] text-lg mb-12 max-w-2xl mx-auto">
       We collaborate with globally recognized brokers to ensure seamless trading experiences for our community.
     </p>
 
     <div className="flex flex-wrap justify-center gap-10 items-center mb-16">
-      {[{
-        name: 'exeness',
-        url: 'https://one.exnesstrack.org/a/hml0dmvhfy',
-        logo: '/exeness1.png'
-      }, {
-        name: 'Pu Prime',
-        url: 'https://www.puprime.partners/forex-trading-account/?affid=60771',
-        logo: '/pu_prime.png'
-      }].map((broker, index) => (
+      {[
+        {
+          name: 'exeness',
+          url: 'https://one.exnesstrack.org/a/hml0dmvhfy',
+          logo: '/exeness1.png'
+        },
+        {
+          name: 'Pu Prime',
+          url: 'https://www.puprime.partners/forex-trading-account/?affid=60771',
+          logo: '/pu_prime.png'
+        }
+      ].map((broker, index) => (
         <a
           key={index}
           href={broker.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-white/80 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-1 border border-gray-200 w-48 flex items-center justify-center"
+          className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-1 border border-gray-200 w-48 flex items-center justify-center"
         >
           <img src={broker.logo} alt={broker.name} className="h-12 object-contain" />
         </a>
       ))}
     </div>
 
-    <h3 className="text-2xl font-bold text-white mb-4">Join Our Trading Community</h3>
-    <p className="text-white/90 text-md mb-8">Stay connected and never miss a market move.</p>
+    <h3 className="text-2xl font-bold text-[#1d3557] mb-4">Join Our Trading Community</h3>
+    <p className="text-[#0d3e61] text-md mb-8">Stay connected and never miss a market move.</p>
 
     <div className="flex flex-wrap justify-center gap-6">
       <a
@@ -664,9 +674,9 @@ const LandingPage = () => {
         <Instagram className="h-5 w-5" /> <span>Instagram</span>
       </a>
     </div>
-
   </div>
 </section>
+
 
 
 
