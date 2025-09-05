@@ -36,6 +36,37 @@ const userSchema = new mongoose.Schema({
   otp: String,
   otpExpiry: Date,
 
+  // ✅ New fields (all optional)
+  address: {
+    type: String,
+    trim: true
+  },
+
+  aadharCardNo: {
+    type: String,
+    trim: true
+  },
+
+  aadharImgUrl: {
+    type: String,
+    trim: true
+  },
+
+  panCardNo: {
+    type: String,
+    trim: true
+  },
+
+  panImgUrl: {
+    type: String,
+    trim: true
+  },
+
+  registered: {
+    type: Boolean,
+    default: false
+  },
+
   createdAt: {
     type: Date,
     default: Date.now
