@@ -7,12 +7,16 @@ require("dotenv").config();
 const cors = require("cors");
 
 const PORT = process.env.PORT || 4000;
-
+const uploadRoutes = require('./routes/upload');
 app.use(cors({
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 app.use(express.json());
+
+
+
+app.use('/api/upload', uploadRoutes); // POST /api/upload/image
 
 
 app.use('/api/auth', require('./controllers/authController'));
