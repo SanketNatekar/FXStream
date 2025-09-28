@@ -12,19 +12,64 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key_here';
 // 📌 REGISTER
 router.post('/register', async (req, res) => {
   try {
-    const { fullName, email, password, phone, role } = req.body;
+    const {
+      fullName,
+      email,
+      password,
+      phone,
+      role,
+      address,
+      aadharCardNo,
+      aadharImgUrl,
+      panCardNo,
+      panImgUrl
+    } = req.body;
 
+    // check if user already exists
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: 'User already exists' });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
 
-    const newUser = new User({ fullName, email, password, phone, role });
+    // create new user (excluding enrolledBatches → handled elsewhere)
+    const newUser = new User({
+      fullName,
+      email,
+      password, // ⚠️ hash this in production
+      phone,
+      role,
+      address,
+      aadharCardNo,
+      aadharImgUrl,
+      panCardNo,
+      panImgUrl,
+      registered: true, // mark user as registered
+    });
+
     await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({
+      message: 'User registered successfully',
+      user: {
+        _id: newUser._id,
+        fullName: newUser.fullName,
+        email: newUser.email,
+        phone: newUser.phone,
+        role: newUser.role,
+        address: newUser.address,
+        aadharCardNo: newUser.aadharCardNo,
+        aadharImgUrl: newUser.aadharImgUrl,
+        panCardNo: newUser.panCardNo,
+        panImgUrl: newUser.panImgUrl,
+        createdAt: newUser.createdAt
+      }
+    });
   } catch (err) {
+    console.error('❌ Registration error:', err);
     res.status(500).json({ error: 'Registration failed' });
   }
 });
+
 
 // 📌 LOGIN with PASSWORD
 router.post('/login', async (req, res) => {
