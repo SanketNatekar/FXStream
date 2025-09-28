@@ -66,6 +66,12 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  
+  enrolledBatches: {
+  type: [String], // or [mongoose.Schema.Types.ObjectId] if referencing Batch model
+  default: []
+},
+
 
   createdAt: {
     type: Date,
